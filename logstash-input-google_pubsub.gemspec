@@ -14,21 +14,15 @@ Gem::Specification.new do |s|
    # Tests
   s.test_files = s.files.grep(%r{^(test|spec|features)/})
 
+  s.platform = "java"
+
   # Special flag to let us know this is actually a logstash plugin
   s.metadata = { "logstash_plugin" => "true", "logstash_group" => "input" }
 
   # Gem dependencies
-  s.add_runtime_dependency "logstash-core-plugin-api", ">= 1.60", "<= 2.99"
-  s.add_runtime_dependency 'logstash-codec-plain'
-  s.add_runtime_dependency 'stud', '>= 0.0.22'
-  # Google dependencies
-  # with JRuby
-  s.requirements << "jar 'com.google.cloud:google-cloud-pubsub', '0.28.0-beta'"
-  s.requirements << "jar 'com.google.api.grpc:proto-google-cloud-pubsub-v1', '0.1.24'"
-  s.requirements << "jar 'com.google.api:gax', '1.14.0'"
-  s.requirements << "jar 'com.google.guava:guava', '20.0'"
-  s.requirements << "jar 'com.google.api:api-common', '1.2.0'"
-  s.requirements << "jar 'com.google.auth:google-auth-library-oauth2-http', '0.9.0'"
-  s.add_development_dependency 'logstash-devutils'
-  s.add_development_dependency 'jar-dependencies', '~> 0.3.2'
+  s.add_runtime_dependency "logstash-core-plugin-api", "~> 2.1"
+
+  # Dev
+  s.add_development_dependency "logstash-devutils"
+  s.add_development_dependency "jar-dependencies", '~> 0.4.1'
 end

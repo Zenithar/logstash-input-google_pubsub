@@ -1,17 +1,22 @@
-require "logstash/devutils/rake"
-require "jars/installer"
-require "fileutils"
+@files=[]
 
 task :default do
-  system('rake -vT')
+  system("rake -T")
 end
 
-task :vendor do
-  exit(1) unless system './gradlew vendor'
+require 'logstash/devutils/rake'
+require 'jars/installer'
+
+task :install_jars do
+  system('./gradlew vendor')
 end
 
-task :clean do
-  ["vendor/jar-dependencies", "Gemfile.lock"].each do |p|
-    FileUtils.rm_rf(p)
-  end
+task :vendor => :install_jars
+
+task :test do
+  require 'rspec/core/runner'
+  require 'rspec'
+  system './gradlew clean test'
+  Rake::Task[:install_jars].invoke
+  exit(RSpec::Core::Runner.run(Rake::FileList['spec/**/*_spec.rb']))
 end
